@@ -1,0 +1,63 @@
+<!doctype html>
+<meta charset="utf-8">
+<html>
+
+<head>
+	<title>Sippy Click settings</title>
+	<link rel="stylesheet" href="options.css">
+</head>
+
+<body>
+	<form id="options-form">
+		<section id="test-section">
+			<h1>Test numbers</h1>
+			<p>+32123456789</p>
+			<p><a href="tel:+32123456789">+32123456789</a></p>
+		</section>
+
+		<section id="http-section">
+			<h1>Account</h1>
+			<p>With which account do you want us to call?</p>
+			<label>
+				Username
+				<input type="text" id="username">
+			</label>
+			<br />
+			<label>
+				Password
+				<input type="password" id="password">
+			</label>
+		</section>
+
+		<section id="http-section">
+			<h1>Protocol</h1>
+			<p>Not all devices provide support for HTTPS. If you have an old device, you'll likely only have HTTP available.
+			</p>
+			<label>
+				HTTP
+				<select id="http">
+					<option value="https">HTTPS</option>
+					<option value="http">HTTP</option>
+				</select>
+			</label>
+		</section>
+
+		<section id="address-section">
+			<h1>IP address</h1>
+			<p>The IP-address of your device.</p>
+			<label>
+				Address
+				<input type="text" id="address">
+			</label>
+		</section>
+
+		<hr />
+
+		<div id="status"></div>
+		<button id="save">Save</button>
+	</form>
+
+	<script src="options.js" type="module"></script>
+</body>
+
+</html>
