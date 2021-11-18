@@ -9,6 +9,7 @@
 		"test": "run-p lint:* build",
 		"watch": "parcel watch source/manifest.json --dist-dir distribution --no-cache --no-hmr"
 	},
+	"license": "Apache-2.0",
 	"browserslist": [
 		"last 1 Chrome version",
 		"last 1 Firefox version"
