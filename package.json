@@ -56,5 +56,8 @@
 	},
 	"webExt": {
 		"sourceDir": "distribution"
+	},
+	"dependencies": {
+		"google-libphonenumber": "^3.2.25"
 	}
 }
