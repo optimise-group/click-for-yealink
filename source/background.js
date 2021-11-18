@@ -24,7 +24,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     let number = '';
 
     if (info.menuItemId === 'selection-call') {
-      number = phoneUtil.format(phoneUtil.parse(info.selectionText, 'BE'), PNF.E164);
+      number = phoneUtil.format(phoneUtil.parse(info.selectionText, phoneUtil.getRegionCodeForNumber(phoneUtil.parseAndKeepRawInput(info.selectionText))), PNF.E164);
     } else if (info.menuItemId === 'link-call') {
       if (info.linkUrl.startsWith('tel:')) {
         number = info.linkUrl.substring(4);
