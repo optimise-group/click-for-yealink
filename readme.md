@@ -9,6 +9,12 @@ This is a native extension that should work with desk phones from Yealink.
 In order to make this extension work you'll need to configure Yealink to accept remote actions.
 This can be archived by loging into the device then go to "Features" > "Remote Control" and set "Action URI Allow IP List" to the IP-address on which you use this browser extension. You can also set "any" to allow it from anywhere, but be carefull with this configuration.
 
+The following values are allowed:
+
+- Full IP-address (192.168.0.123)
+- Partial IP-address (192.168.0.* or 192.168.*.*)
+- "any"
+
 ![Yealink Configuration](media/yealink-config.png)
 
 When you trigger a call for the first time a pop-up may appear on the Yealink device, you'll need to press "OK" to allow remote control.
