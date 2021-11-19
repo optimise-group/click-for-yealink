@@ -40,7 +40,8 @@
 					"varsIgnorePattern": "browser"
 				}
 			]
-		}
+		},
+		"space": true
 	},
 	"stylelint": {
 		"extends": "stylelint-config-xo"
