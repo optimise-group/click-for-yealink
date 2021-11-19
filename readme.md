@@ -15,6 +15,10 @@ When you trigger a call for the first time a pop-up may appear on the Yealink de
 
 ![Yealink Pop-Up](media/yealink-pop-up.png)
 
+## Notice
+
+Only use this extension on local trusted networks as the way authentication works is not very secure. To protect you further you should set your IP-address in the "Action URI Allow IP List" configuration instead of "any". Also, you should never expose your device to the public network!
+
 ## Copyright and License
 
 Copyright (c) 2021 Optimise Group
