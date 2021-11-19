@@ -11,7 +11,7 @@ This can be archived by loging into the device then go to "Features" > "Remote C
 
 ![Yealink Configuration](media/yealink-config.png)
 
-When you trigger a call for the first time a pop-up appears on the Yealink device, you'll need to press "OK" to allow remote control.
+When you trigger a call for the first time a pop-up may appear on the Yealink device, you'll need to press "OK" to allow remote control.
 
 ![Yealink Pop-Up](media/yealink-pop-up.png)
 
