@@ -35,7 +35,10 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
     chrome.storage.sync.get(['username', 'password', 'http', 'address'], (items) => {
       chrome.tabs.create({
-        url: `${items.http}://${items.username}:${encodeURIComponent(items.password)}@${items.address}/servlet?key=number=${encodeURIComponent(number)}`
+        url: `${items.http}://${items.username}:${encodeURIComponent(items.password)}@${items.address}/servlet?key=number=${encodeURIComponent(number)}`,
+        active: false
+      }, (tab) => {
+        setTimeout(() => chrome.tabs.remove(tab.id), 1000)
       });
     });
   }
