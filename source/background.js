@@ -31,14 +31,18 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         number = info.linkUrl;
       }
     }
-
-    chrome.storage.sync.get(['username', 'password', 'http', 'address'], (items) => {
-      chrome.tabs.create({
-        url: `${items.http}://${items.username}:${encodeURIComponent(items.password)}@${items.address}/servlet?key=number=${encodeURIComponent(number)}`,
-        active: false
-      }, (tab) => {
-        setTimeout(() => chrome.tabs.remove(tab.id), 1000)
+    
+    if (!isValidNumber(number)) {
+      alert('The phone number you selected isn\'t a valid number...');
+    } else {
+      chrome.storage.sync.get(['username', 'password', 'http', 'address'], (items) => {
+        chrome.tabs.create({
+          url: `${items.http}://${items.username}:${encodeURIComponent(items.password)}@${items.address}/servlet?key=number=${encodeURIComponent(number)}`,
+          active: false
+        }, (tab) => {
+          setTimeout(() => chrome.tabs.remove(tab.id), 1000)
+        });
       });
-    });
+    }
   }
 });
