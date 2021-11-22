@@ -3,66 +3,82 @@
 <html>
 
 <head>
-	<title>Sippy Click settings</title>
-	<link rel="stylesheet" href="options.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <title>Sippy Click settings</title>
+  <link rel="stylesheet" href="options.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
 <body>
-	<form id="options-form" class="container">
-		<section id="test-section" class="mb-3">
-			<h2>Test numbers</h2>
-			<p style="margin-top: 2px; margin-bottom: 2px">+32123456789</p>
-			<p style="margin-top: 2px; margin-bottom: 2px">+32 123 45 67 89</p>
-			<p style="margin-top: 2px; margin-bottom: 2px">+32(0)23/45.67.89</p>
-			<p style="margin-top: 2px; margin-bottom: 2px">+31(0)23/45.67.89</p>
-			<p style="margin-top: 2px; margin-bottom: 2px"><a href="tel:+32123456789">+32123456789</a></p>
-		</section>
+  <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#"><span class="fw-bold">Sippy Click</span> <span class="fw-light">for YeaLink</span></a>
+    </div>
+  </nav>
+  <form id="options-form" class="container">
+    <div class="row">
+      <div class="col-12 col-md-9">
+        <section id="test-section" class="mt-3">
+          <h2 class="h4">Test numbers</h2>
+          <p style="margin-top: 2px; margin-bottom: 2px">+32123456789</p>
+          <p style="margin-top: 2px; margin-bottom: 2px">+32 123 45 67 89</p>
+          <p style="margin-top: 2px; margin-bottom: 2px">+32(0)23/45.67.89</p>
+          <p style="margin-top: 2px; margin-bottom: 2px">+31(0)23/45.67.89</p>
+          <p style="margin-top: 2px; margin-bottom: 2px"><a href="tel:+32123456789">+32123456789</a></p>
+        </section>
+    
+        <section id="http-section" class="mt-3">
+          <h2 class="h4">Account</h2>
+          <p>With which account do you want us to call?</p>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username">
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password">
+          </div>
+        </section>
+    
+        <section id="http-section" class="mt-3">
+          <h2 class="h4">Protocol</h2>
+          <p>Not all devices provide support for HTTPS. If you have an old device, you'll likely only have HTTP available.
+          </p>
+    
+          <div class="mb-3">
+            <label for="http" class="form-label">Password</label>
+            <select class="form-select" id="http">
+              <option value="https">HTTPS</option>
+              <option value="http">HTTP</option>
+            </select>
+          </div>
+        </section>
+    
+        <section id="address-section" class="mt-3">
+          <h2 class="h4">IP address</h2>
+          <p>The IP-address of your device.</p>
+    
+          <div class="mb-3">
+            <label for="address" class="form-label">IP address</label>
+            <input type="text" class="form-control" id="address">
+          </div>
+        </section>
+    
+        <section id="save-section" class="mt-3">
+          <div id="status"></div>
+          <button id="save" class="btn btn-primary">Save</button>
+        </section>
+      </div>
+      <div class="col-12 col-md-3">
+        <aside class="mt-3">
+          <h6>About Sippy Click for YeaLink</h6>
+          <p>&copy; Sippy &middot; 2021</p>
+        </aside>
+      </div>
+    </div>
+  </form>
 
-		<section id="http-section" class="mb-3">
-			<h2>Account</h2>
-			<p>With which account do you want us to call?</p>
-			<div class="mb-3">
-				<label for="username" class="form-label">Username</label>
-				<input type="text" class="form-control" id="username">
-			</div>
-			<div class="mb-3">
-				<label for="password" class="form-label">Password</label>
-				<input type="password" class="form-control" id="password">
-			</div>
-		</section>
-
-		<section id="http-section" class="mb-3">
-			<h2>Protocol</h2>
-			<p>Not all devices provide support for HTTPS. If you have an old device, you'll likely only have HTTP available.
-			</p>
-
-			<div class="mb-3">
-				<label for="http" class="form-label">Password</label>
-				<select class="form-select" id="http">
-					<option value="https">HTTPS</option>
-					<option value="http">HTTP</option>
-				</select>
-			</div>
-		</section>
-
-		<section id="address-section" class="mb-3">
-			<h2>IP address</h2>
-			<p>The IP-address of your device.</p>
-
-			<div class="mb-3">
-				<label for="address" class="form-label">IP address</label>
-				<input type="text" class="form-control" id="address">
-			</div>
-		</section>
-
-		<section id="save-section" class="mt-5">
-			<div id="status"></div>
-			<button id="save" class="btn btn-primary">Save</button>
-		</section>
-	</form>
-
-	<script src="options.js" type="module"></script>
+  <script src="options.js" type="module"></script>
 </body>
 
 </html>
