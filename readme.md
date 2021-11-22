@@ -1,6 +1,6 @@
 # Sippy Click for Yealink
 
-Click2Dial browser extension for Yealink devices.
+Sippy Click browser extension for Yealink devices.
 
 This is a native extension that should work with desk phones from Yealink.
 
