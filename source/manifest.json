@@ -1,8 +1,8 @@
 {
-	"name": "Yealink Click2Dial",
-	"version": "0.1.0",
+	"name": "Sippy Click for Yealink",
+	"version": "0.2.0",
 	"description": "Click and select phone numbers to call them.",
-	"homepage_url": "https://github.com/optimise-group/click2dial-for-yealink",
+	"homepage_url": "https://github.com/optimise-group/click-for-yealink",
 	"manifest_version": 2,
 	"minimum_chrome_version": "74",
 	"applications": {

@@ -1,4 +1,4 @@
-# Click2Dial For Yealink
+# Sippy Click for Yealink
 
 Click2Dial browser extension for Yealink devices.
 

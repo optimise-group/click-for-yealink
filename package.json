@@ -1,6 +1,6 @@
 {
-	"name": "click2dial-for-yealink",
-	"description": "Click2Dial browser extension for Yealink devices.",
+	"name": "sippy-click-for-yealink",
+	"description": "Sippy Click browser extension for Yealink devices.",
 	"version": "0.1.0",
 	"scripts": {
 		"build": "parcel build source/manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0",
@@ -13,18 +13,19 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/optimise-group/click2dial-for-yealink.git"
+		"url": "https://github.com/optimise-group/click-for-yealink.git"
 	},
 	"keywords": [
+		"sippy",
 		"browser-extension",
 		"click2dial",
 		"Yealink"
 	],
 	"license": "Apache-2.0",
 	"bugs": {
-		"url": "https://github.com/optimise-group/click2dial-for-yealink/issues"
+		"url": "https://github.com/optimise-group/click-for-yealink/issues"
 	},
-	"homepage": "https://github.com/optimise-group/click2dial-for-yealink",
+	"homepage": "https://github.com/optimise-group/click-for-yealink",
 	"browserslist": [
 		"last 1 Chrome version",
 		"last 1 Firefox version"
