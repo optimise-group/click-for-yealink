@@ -31,10 +31,14 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
         number = info.linkUrl;
       }
     }
+
+    let isValid = true;
     
     if (!isValidNumber(number)) {
-      alert('The phone number you selected isn\'t a valid number...');
-    } else {
+      isValid = confirm(`The phone number (${number}) you selected isn't a valid number. Would you like to call it anyway?`);
+    }
+    
+    if (isValid) {
       chrome.storage.sync.get(['username', 'password', 'http', 'address'], (items) => {
         chrome.tabs.create({
           url: `${items.http}://${items.username}:${encodeURIComponent(items.password)}@${items.address}/servlet?key=number=${encodeURIComponent(number)}`,
