@@ -1,5 +1,4 @@
-const PNF = require('google-libphonenumber').PhoneNumberFormat;
-const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+const {parsePhoneNumber, isValidNumber} = require('libphonenumber-js');
 
 chrome.runtime.onInstalled.addListener((_reason) => {
   chrome.tabs.create({
@@ -24,7 +23,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     let number = '';
 
     if (info.menuItemId === 'selection-call') {
-      number = phoneUtil.format(phoneUtil.parse(info.selectionText, phoneUtil.getRegionCodeForNumber(phoneUtil.parseAndKeepRawInput(info.selectionText))), PNF.E164);
+      number = parsePhoneNumber(info.selectionText).format('E.164');
     } else if (info.menuItemId === 'link-call') {
       if (info.linkUrl.startsWith('tel:')) {
         number = info.linkUrl.substring(4);
