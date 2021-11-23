@@ -25,17 +25,31 @@ async function renderPhoneNumbers() {
           let prependable = document.createTextNode(text.substring(0, number.startsAt));
           let appendable = document.createTextNode(text.substring(number.endsAt));
 
-          let anchor = document.createElement('a');
+          // Create the new anchor tag
+          let anchor;
+
+          if (node.parentNode.nodeName === 'A') {
+            // If the parent is an anchor already, we replace the URL of the parent
+            anchor = node.parentNode;
+
+            anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
+            anchor.setAttribute('class', 'sippy-click-touched');
+            anchor.setAttribute('target', '_blank');
+
+            node.parentNode = anchor;
+          } else {
+            anchor = document.createElement('a');
           
-          anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
-          anchor.setAttribute('class', 'sippy-click-touched');
-          anchor.setAttribute('target', '_blank');
-          anchor.appendChild(document.createTextNode(number.number.number));
+            anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
+            anchor.setAttribute('class', 'sippy-click-touched');
+            anchor.setAttribute('target', '_blank');
+            anchor.appendChild(document.createTextNode(number.number.number));
           
-          let parentNode = node.parentNode;
-          parentNode.replaceChild(appendable, node);
-          parentNode.insertBefore(anchor, appendable);
-          parentNode.insertBefore(prependable, anchor);
+            let parentNode = node.parentNode;
+            parentNode.replaceChild(appendable, node);
+            parentNode.insertBefore(anchor, appendable);
+            parentNode.insertBefore(prependable, anchor);
+          }
         });
 
         if (numbers.length > 0) {
