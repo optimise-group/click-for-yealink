@@ -4,11 +4,12 @@ renderPhoneNumbers();
 
 async function renderPhoneNumbers() {
   // Get all elements on a page
-  let elements = document.getElementsByTagName('*');
+  const elements = document.getElementsByTagName('*');
+  let elementalLength = elements.length;
 
   const clickConfiguration = await getAllStorageSyncData();
 
-  for (let i = 0; i < elements.length; i++) {
+  for (let i = 0; i < elementalLength; i++) {
     let element = elements[i];
 
     for (let j = 0; j < element.childNodes.length; j++) {
@@ -36,6 +37,12 @@ async function renderPhoneNumbers() {
           parentNode.insertBefore(anchor, appendable);
           parentNode.insertBefore(prependable, anchor);
         });
+
+        if (numbers.length > 0) {
+          // Manually bump loop integer and elementalLength to accomodate for new nodes
+          elementalLength += numbers.length;
+          i++;
+        }
       }
     }
   }
