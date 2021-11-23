@@ -38,12 +38,15 @@ async function renderPhoneNumbers() {
 
             node.parentNode = anchor;
           } else {
+            // The parent isn't an anchor, and we should insert a new A-node into it
             anchor = document.createElement('a');
           
             anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
             anchor.setAttribute('class', 'sippy-click-touched');
             anchor.setAttribute('target', '_blank');
-            anchor.appendChild(document.createTextNode(number.number.number));
+            // The following line would insert an E.164-formatted number
+            // anchor.appendChild(document.createTextNode(number.number.number));
+            anchor.appendChild(document.createTextNode(text.substring(number.startsAt, number.endsAt)));
           
             let parentNode = node.parentNode;
             parentNode.replaceChild(appendable, node);
