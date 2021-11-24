@@ -18,7 +18,7 @@ async function renderPhoneNumbers() {
       // Only act on text nodes
       if (node.nodeType === 3) {
         if (node.parentNode.nodeName === 'BUTTON') {
-          return;
+          continue;
         }
         
         let text = node.nodeValue;
