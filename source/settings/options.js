@@ -4,12 +4,13 @@ function save_options() {
   var http = document.getElementById('http').value;
   var address = document.getElementById('address').value || '';
 
-  chrome.storage.sync.set({
-    username,
-    password,
-    http,
-    address
-  }, function () {
+  let saveSet = { username, http, address };
+
+  if (password) {
+    saveSet = { username, password, http, address };
+  }
+
+  chrome.storage.sync.set(saveSet, function () {
     var status = document.getElementById('status');
     status.textContent = 'Options saved.';
 
