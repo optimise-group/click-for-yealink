@@ -17,6 +17,10 @@ async function renderPhoneNumbers() {
 
       // Only act on text nodes
       if (node.nodeType === 3) {
+        if (node.parentNode.nodeName === 'BUTTON') {
+          return;
+        }
+        
         let text = node.nodeValue;
 
         const numbers = findPhoneNumbersInText(text);
