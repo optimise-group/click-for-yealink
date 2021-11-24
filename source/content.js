@@ -77,8 +77,7 @@ async function renderPhoneNumbers() {
 
             node.parentNode = parentNode;
           } else {
-            if (!node.parentNode.href.includes('tel:') || numbers.length === 0) {
-            } else {
+            if (node.parentNode.href.includes('tel:') && numbers.length !== 0) {
               const number = numbers.pop();
               let anchor = node.parentNode;
   
