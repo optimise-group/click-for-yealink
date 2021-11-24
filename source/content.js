@@ -4,7 +4,7 @@ renderPhoneNumbers();
 
 async function renderPhoneNumbers() {
   // Get all elements on a page
-  const elements = document.getElementsByTagName('*');
+  const elements = document.body.getElementsByTagName('*');
   let elementalLength = elements.length;
 
   const clickConfiguration = await getAllStorageSyncData();
