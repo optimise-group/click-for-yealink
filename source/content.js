@@ -1,4 +1,4 @@
-const { findPhoneNumbersInText } = require('libphonenumber-js');
+const { findPhoneNumbersInText, isValidPhoneNumber } = require('libphonenumber-js');
 
 renderPhoneNumbers();
 
@@ -35,9 +35,16 @@ async function renderPhoneNumbers() {
             const textLengthDifference = originalTextLength - newTextLEngth;
 
             const newComponents = [];
-            newComponents.push(lastArrayItem.substring(0, number.startsAt - textLengthDifference));
+
+            if (number.startsAt !== 0) {
+              newComponents.push(lastArrayItem.substring(0, number.startsAt - textLengthDifference));
+            }
+
             newComponents.push(lastArrayItem.substring(number.startsAt - textLengthDifference, number.endsAt - textLengthDifference));
-            newComponents.push(lastArrayItem.substring(number.endsAt - textLengthDifference));
+            
+            if (number.endsAt !== lastArrayItem.length - 1) {
+              newComponents.push(lastArrayItem.substring(number.endsAt - textLengthDifference));
+            }
 
             newComponents.forEach((newComponent) => nodeComponents.push(newComponent));
           });
@@ -46,13 +53,13 @@ async function renderPhoneNumbers() {
             let parentNode = node.parentNode;
 
             nodeComponents.forEach((item, index) => {
-              if (index === 0) {
-                parentNode.replaceChild(document.createTextNode(item), node);
-                return;
-              }
+              if (!isValidPhoneNumber(item)) {
+                if (index === 0) {
+                  parentNode.replaceChild(document.createTextNode(item), node);
+                } else {
+                  parentNode.appendChild(document.createTextNode(item));
+                }
 
-              if (index % 2 == 0) {
-                parentNode.appendChild(document.createTextNode(item));
                 return;
               }
 
@@ -72,7 +79,11 @@ async function renderPhoneNumbers() {
               // anchor.appendChild(document.createTextNode(number.number.number));
               anchor.appendChild(document.createTextNode(item));
 
-              parentNode.appendChild(anchor);
+              if (index === 0) {
+                parentNode.replaceChild(anchor, node);
+              } else {
+                parentNode.appendChild(anchor);
+              }
             });
 
             node.parentNode = parentNode;
