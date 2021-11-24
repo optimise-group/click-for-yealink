@@ -65,7 +65,7 @@ async function renderPhoneNumbers() {
               elementalLength++;
               i++;
 
-              anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
+              anchor.setAttribute('href', callableUri(clickConfiguration, number.number.format('E.164')));
               anchor.setAttribute('class', 'sippy-click-touched');
               anchor.setAttribute('target', '_blank');
               // The following line would insert an E.164-formatted number
@@ -81,7 +81,7 @@ async function renderPhoneNumbers() {
               const number = numbers.pop();
               let anchor = node.parentNode;
   
-              anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
+              anchor.setAttribute('href', callableUri(clickConfiguration, number.number.format('E.164')));
               anchor.setAttribute('class', 'sippy-click-touched');
               anchor.setAttribute('target', '_blank');
 
@@ -97,7 +97,7 @@ async function renderPhoneNumbers() {
         } else if (node.parentNode.nodeName === 'A' && node.parentNode.href.includes('tel:')) {
           let anchor = node.parentNode;
 
-          anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(node.parentNode.href.replace('tel:', ''))}`);
+          anchor.setAttribute('href', callableUri(clickConfiguration, node.parentNode.href.replace('tel:', '')));
           anchor.setAttribute('class', 'sippy-click-touched');
           anchor.setAttribute('target', '_blank');
   
@@ -118,4 +118,8 @@ function getAllStorageSyncData() {
       resolve(items);
     });
   });
+}
+
+function callableUri(config, number) {
+  return `${config.http}://${config.username}:${encodeURIComponent(config.password)}@${config.address}/servlet?key=number=${encodeURIComponent(number)}`;
 }
