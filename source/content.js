@@ -20,45 +20,77 @@ async function renderPhoneNumbers() {
         let text = node.nodeValue;
 
         const numbers = findPhoneNumbersInText(text);
+        const originalTextLength = text.length;
 
-        numbers.forEach((number) => {
-          let prependable = document.createTextNode(text.substring(0, number.startsAt));
-          let appendable = document.createTextNode(text.substring(number.endsAt));
+        let nodeComponents = [text];
 
-          // Create the new anchor tag
-          let anchor;
+        if (numbers) {
+          numbers.forEach((number) => {
+            const lastArrayItem = nodeComponents.pop();
+            const newTextLEngth = lastArrayItem.length;
+            const textLengthDifference = originalTextLength - newTextLEngth;
 
-          if (node.parentNode.nodeName === 'A') {
-            // If the parent is an anchor already, we replace the URL of the parent
-            anchor = node.parentNode;
+            const newComponents = [];
+            newComponents.push(lastArrayItem.substring(0, number.startsAt - textLengthDifference));
+            newComponents.push(lastArrayItem.substring(number.startsAt - textLengthDifference, number.endsAt - textLengthDifference));
+            newComponents.push(lastArrayItem.substring(number.endsAt - textLengthDifference));
 
-            anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
-            anchor.setAttribute('class', 'sippy-click-touched');
-            anchor.setAttribute('target', '_blank');
+            newComponents.forEach((newComponent) => nodeComponents.push(newComponent));
+          });
 
-            node.parentNode = anchor;
-          } else {
-            // The parent isn't an anchor, and we should insert a new A-node into it
-            anchor = document.createElement('a');
-          
-            anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
-            anchor.setAttribute('class', 'sippy-click-touched');
-            anchor.setAttribute('target', '_blank');
-            // The following line would insert an E.164-formatted number
-            // anchor.appendChild(document.createTextNode(number.number.number));
-            anchor.appendChild(document.createTextNode(text.substring(number.startsAt, number.endsAt)));
-          
+          if (node.parentNode.nodeName !== 'A') {
             let parentNode = node.parentNode;
-            parentNode.replaceChild(appendable, node);
-            parentNode.insertBefore(anchor, appendable);
-            parentNode.insertBefore(prependable, anchor);
-          }
-        });
 
-        if (numbers.length > 0) {
-          // Manually bump loop integer and elementalLength to accomodate for new nodes
-          elementalLength += numbers.length;
-          i++;
+            nodeComponents.forEach((item, index) => {
+              if (index === 0) {
+                parentNode.replaceChild(document.createTextNode(item), node);
+                return;
+              }
+
+              if (index % 2 == 0) {
+                parentNode.appendChild(document.createTextNode(item));
+                return;
+              }
+
+              const number = numbers.pop();
+
+              // The parent isn't an anchor, and we should insert a new A-node into it
+              let anchor = document.createElement('a');
+
+              // We just created a new node, we should account for that in our loop
+              elementalLength++;
+              i++;
+
+              anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
+              anchor.setAttribute('class', 'sippy-click-touched');
+              anchor.setAttribute('target', '_blank');
+              // The following line would insert an E.164-formatted number
+              // anchor.appendChild(document.createTextNode(number.number.number));
+              anchor.appendChild(document.createTextNode(item));
+
+              parentNode.appendChild(anchor);
+            });
+
+            node.parentNode = parentNode;
+          } else {
+            if (!node.parentNode.href.includes('tel:') || numbers.length === 0) {
+            } else {
+              const number = numbers.pop();
+              let anchor = node.parentNode;
+  
+              anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(number.number.format('E.164'))}`);
+              anchor.setAttribute('class', 'sippy-click-touched');
+              anchor.setAttribute('target', '_blank');
+
+              nodeComponents = nodeComponents.filter((item) => item !== '');
+  
+              nodeComponents.forEach((item, index) => {
+                anchor.replaceChild(document.createTextNode(item), anchor.childNodes[index]);
+              });
+  
+              node.parentNode = anchor;
+            }
+          }
         }
       }
     }
