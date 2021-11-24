@@ -95,6 +95,14 @@ async function renderPhoneNumbers() {
               node.parentNode = anchor;
             }
           }
+        } else if (node.parentNode.nodeName === 'A' && node.parentNode.href.includes('tel:')) {
+          let anchor = node.parentNode;
+
+          anchor.setAttribute('href', `${clickConfiguration.http}://${clickConfiguration.username}:${encodeURIComponent(clickConfiguration.password)}@${clickConfiguration.address}/servlet?key=number=${encodeURIComponent(node.parentNode.href.replace('tel:', ''))}`);
+          anchor.setAttribute('class', 'sippy-click-touched');
+          anchor.setAttribute('target', '_blank');
+  
+          node.parentNode = anchor;
         }
       }
     }
