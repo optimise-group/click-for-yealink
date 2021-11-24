@@ -28,7 +28,7 @@ async function renderPhoneNumbers() {
 
         let nodeComponents = [text];
 
-        if (numbers) {
+        if (numbers.length >= 1) {
           numbers.forEach((number) => {
             const lastArrayItem = nodeComponents.pop();
             const newTextLEngth = lastArrayItem.length;
