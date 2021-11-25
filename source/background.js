@@ -27,6 +27,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     } else if (info.menuItemId === 'link-call') {
       if (info.linkUrl.startsWith('tel:')) {
         number = info.linkUrl.substring(4);
+      } else if (info.linkUrl.includes('servlet?key=number=')) {
+        number = decodeURIComponent(info.linkUrl.substring(info.linkUrl.indexOf('servlet?key=number=') + 'servlet?key=number='.length));
       } else {
         number = info.linkUrl;
       }
