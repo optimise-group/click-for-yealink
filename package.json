@@ -54,7 +54,7 @@
 		"parcel": "^2.0.1",
 		"stylelint": "^14.1.0",
 		"stylelint-config-xo": "^0.20.1",
-		"xo": "^0.46.1"
+		"xo": "^0.47.0"
 	},
 	"webExt": {
 		"sourceDir": "distribution"
