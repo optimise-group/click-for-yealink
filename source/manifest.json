@@ -1,13 +1,13 @@
 {
 	"name": "Sippy Click for Yealink",
-	"version": "0.4.3",
+	"version": "0.4.4",
 	"description": "Click and select phone numbers to call them.",
 	"homepage_url": "https://github.com/optimise-group/click-for-yealink",
 	"manifest_version": 2,
 	"minimum_chrome_version": "74",
 	"browser_specific_settings": {
 		"gecko": {
-			"id": "click-for-yealink@sippy.cloud",
+			"id": "sippy-click-for-yealink@sippy.cloud",
 			"strict_min_version": "67.0"
 		}
 	},
