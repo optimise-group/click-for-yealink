@@ -41,12 +41,14 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }
     
     if (isValid) {
-      chrome.storage.sync.get(['username', 'password', 'http', 'address'], (items) => {
+      chrome.storage.sync.get(['username', 'password', 'enableTimeout', 'http', 'address'], (items) => {
         browser.tabs.create({
           url: `${items.http}://${items.username}:${encodeURIComponent(items.password)}@${items.address}/servlet?key=number=${encodeURIComponent(number)}`,
           active: false
         }, (tab) => {
-          setTimeout(() => browser.tabs.remove(tab.id), 1000)
+          if (items.enableTimeout) {
+            setTimeout(() => browser.tabs.remove(tab.id), 1000);
+          }
         });
       });
     }
