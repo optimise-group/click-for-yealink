@@ -1,4 +1,4 @@
-const {parsePhoneNumber, isValidNumber} = require('libphonenumber-js');
+const { parsePhoneNumber, isValidNumber } = require('libphonenumber-js');
 
 chrome.runtime.onInstalled.addListener((_reason) => {
   chrome.tabs.create({

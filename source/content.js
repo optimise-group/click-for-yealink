@@ -1,18 +1,27 @@
-const { findPhoneNumbersInText, isValidPhoneNumber } = require('libphonenumber-js');
-
 renderPhoneNumbers();
 
 async function renderPhoneNumbers() {
   const clickConfiguration = await getAllStorageSyncData();
 
   const formats = [
-    'xxxxxxxxxxx',
-    '+xx xxx xx xx xx',
-    '+xx(0)xxx/xx.xx.xx',
-    'xxx+xxxxxxxxxx',
     '(xxx) xxx-xxxx',
     '(xxx)xxx-xxxx',
+    '+xx xx xx xx xx',
+    '+xx xxx xx xx xx',
+    '+xx(0)xx/xx.xx.xx',
+    '+xx(0)xx/xx.xx.xx',
+    '+xx(0)xxx/xx.xx.xx',
+    '+xx/xx.xx.xx',
+    '+xxxxxxxxxx',
+    'x xx xx xx xx',
+    'xx xx xx xx xx',
+    'xx+xxxxxxxxxx',
     'xxx-xxx-xxxx',
+    'xxx/xx.xx.xx',
+    'xxx+xxxxxxxxxx',
+    'xxxxxxxxxxx',
+    'xxxxxxxxx',
+    'xxxxxxxxx'
   ];
   
   const str = formats.join('|')         // split patterns by OR operator
@@ -31,31 +40,39 @@ async function renderPhoneNumbers() {
   while (node = walker.nextNode()) {
     // Ignore form and script tags
     if (node.parentNode.tagName.search(/SCRIPT|SELECT|OPTION|BUTTON|TEXTAREA|LABEL/) === -1) {
-      // Split elements between phone and normal text
-      const nodeCompartments = node.nodeValue.split(r);
+      if (node.parentNode.tagName === 'A' && node.parentNode.href.includes('tel:')) {
+        console.log('anchor', node.parentNode.tagName, node.parentNode.href, node.parentNode.href.slice(4).replace(/\+?[^\d+]/g, ''));
 
-      while (nodeCompartments.length > 1) {
-        const text = nodeCompartments.shift();
+        node.parentNode.setAttribute('href', callableUri(clickConfiguration, node.parentNode.href.slice(4).replace(/\+?[^\d+]/g, '')));
+        node.parentNode.setAttribute('class', 'sippy-click-touched');
+        node.parentNode.setAttribute('target', '_blank');
+      } else {
+        // Split elements between phone and normal text
+        const nodeCompartments = node.nodeValue.split(r);
+  
+        while (nodeCompartments.length > 1) {
+          const text = nodeCompartments.shift();
+  
+          if (text.length) {
+            // Insert new text node for normal text
+            node.parentNode.insertBefore(document.createTextNode(text), node);
+          }
 
-        if (text.length) {
-          // Insert new text node for normal text
-          node.parentNode.insertBefore(document.createTextNode(text), node);
+          // Create an anchor element for phone numbers
+          const phoneNumber = nodeCompartments.shift();
+          const anchor = document.createElement('a');
+          anchor.setAttribute('href', callableUri(clickConfiguration, phoneNumber.replace(/\+?[^\d+]/g, '')));
+          anchor.setAttribute('class', 'sippy-click-touched');
+          anchor.setAttribute('target', '_blank');
+          anchor.textContent = phoneNumber;
+            
+          // Re-insert phonenumber
+          node.parentNode.insertBefore(anchor, node);
         }
         
-        // Create an anchor element for phone numbers
-        const phoneNumber = nodeCompartments.shift();
-        const anchor = document.createElement('a');
-        anchor.setAttribute('href', callableUri(clickConfiguration, phoneNumber.replace(/\+?[^\d]/g, '')));
-        anchor.setAttribute('class', 'sippy-click-touched');
-        anchor.setAttribute('target', '_blank');
-        anchor.textContent = phoneNumber;
-        
-        // Re-insert phonenumber
-        node.parentNode.insertBefore(anchor, node);
+        // reduce the original node to the ending non-phone part
+        node.nodeValue = nodeCompartments[0];
       }
-      
-      // reduce the original node to the ending non-phone part
-      node.nodeValue = nodeCompartments[0];
     };
   }
 }
