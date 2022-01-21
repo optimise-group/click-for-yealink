@@ -17,7 +17,7 @@ async function renderPhoneNumbers() {
 
       // Only act on text nodes
       if (node.nodeType === 3) {
-        if (node.parentNode.nodeName === 'BUTTON') {
+        if (node.parentNode.nodeName === 'BUTTON' || node.parentNode.nodeName === 'TEXTAREA' || node.parentNode.nodeName === 'OPTION' || node.parentNode.nodeName === 'LABEL') {
           continue;
         }
         
