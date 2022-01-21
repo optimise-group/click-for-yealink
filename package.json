@@ -60,6 +60,6 @@
 		"sourceDir": "distribution"
 	},
 	"dependencies": {
-		"libphonenumber-js": "^1.9.43"
+		"libphonenumber-js": "^1.9.44"
 	}
 }
