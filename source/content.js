@@ -31,8 +31,6 @@ async function renderPhoneNumbers() {
     .replace(/x/g, '\\d')
   ;
 
-  console.log(formats, str);
-
   let node;
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
 
