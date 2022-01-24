@@ -8,47 +8,45 @@ async function renderPhoneNumbers() {
     '(xxx)xxx-xxxx',
     '+xx xx xx xx xx',
     '+xx xxx xx xx xx',
-    '+xx(0)xx/xx.xx.xx',
-    '+xx(0)xx/xx.xx.xx',
-    '+xx(0)xxx/xx.xx.xx',
-    '+xx/xx.xx.xx',
-    '+xxxxxxxxxx',
+    '+xx(0)xx/xx-xx-xx',
+    '+xx(0)xxx/xx-xx-xx',
+    '+xx/xx-xx-xx',
+    '+x{10,15}',
+    'x{2,3}+x{9,15}',
     'x xx xx xx xx',
     'xx xx xx xx xx',
     'xx+xxxxxxxxxx',
     'xxx-xxx-xxxx',
-    'xxx/xx.xx.xx',
+    'xxx/xx-xx-xx',
     'xxx+xxxxxxxxxx',
-    'xxxxxxxxxxx',
-    'xxxxxxxxx',
-    'xxxxxxxxx'
+    'x{9,14}',
   ];
   
-  const str = formats.join('|')         // split patterns by OR operator
-    .replace(/[()+]/g, '\\$&')      // escape special characters
-    .replace(/-/g, '[-. ]')         // hyphen can be space or dot as well
-    .replace(/(^|[|])x/g, '$1\\bx') // require first digit to be start of a word
-    .replace(/x($|[|])/g, 'x\\b$1') // require last digit to be end of a word
-    .replace(/x/g, '\\d')           // set digit placeholders
+  // Create the search string by merging all patterns listed above and normalizing its content
+  const str = formats.join('|')
+    .replace(/[()+]/g, '\\$&')
+    .replace(/-/g, '[-. ]')
+    .replace(/(^|[|])x/g, '$1\\bx')
+    .replace(/x($|[|])/g, 'x\\b$1')
+    .replace(/x/g, '\\d')
   ;
 
-  const r = RegExp('(' + str + ')', '');
-  let node;
+  console.log(formats, str);
 
+  let node;
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
 
   while (node = walker.nextNode()) {
     // Ignore form and script tags
     if (node.parentNode.tagName.search(/SCRIPT|SELECT|OPTION|BUTTON|TEXTAREA|LABEL/) === -1) {
       if (node.parentNode.tagName === 'A' && node.parentNode.href.includes('tel:')) {
-        console.log('anchor', node.parentNode.tagName, node.parentNode.href, node.parentNode.href.slice(4).replace(/\+?[^\d+]/g, ''));
-
         node.parentNode.setAttribute('href', callableUri(clickConfiguration, node.parentNode.href.slice(4).replace(/\+?[^\d+]/g, '')));
         node.parentNode.setAttribute('class', 'sippy-click-touched');
         node.parentNode.setAttribute('target', '_blank');
       } else {
         // Split elements between phone and normal text
-        const nodeCompartments = node.nodeValue.split(r);
+        const regex = RegExp('(' + str + ')', '');
+        const nodeCompartments = node.nodeValue.split(regex);
   
         while (nodeCompartments.length > 1) {
           const text = nodeCompartments.shift();
