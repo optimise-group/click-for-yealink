@@ -23,7 +23,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     let number = '';
 
     if (info.menuItemId === 'selection-call') {
-      number = parsePhoneNumber(info.selectionText).format('E.164');
+      number = parsePhoneNumber(info.selectionText, 'BE').format('E.164');
     } else if (info.menuItemId === 'link-call') {
       if (info.linkUrl.startsWith('tel:')) {
         number = info.linkUrl.substring(4);
@@ -35,11 +35,11 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
     }
 
     let isValid = true;
-    
+
     if (!isValidNumber(number)) {
       isValid = confirm(`The phone number (${number}) you selected isn't a valid number. Would you like to call it anyway?`);
     }
-    
+
     if (isValid) {
       chrome.storage.sync.get(['username', 'password', 'http', 'address'], (items) => {
         chrome.tabs.create({
