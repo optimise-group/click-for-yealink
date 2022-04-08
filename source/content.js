@@ -39,7 +39,7 @@ async function renderPhoneNumbers() {
     if (node.parentNode.tagName.search(/SCRIPT|SELECT|OPTION|BUTTON|TEXTAREA|LABEL/) === -1) {
       if (node.parentNode.tagName === 'A' && node.parentNode.href.includes('tel:')) {
         node.parentNode.setAttribute('href', callableUri(clickConfiguration, node.parentNode.href.slice(4).replace(/\+?[^\d+]/g, '')));
-        node.parentNode.setAttribute('class', 'sippy-click-touched');
+        node.parentNode.classList.add('sippy-click-touched');
         node.parentNode.setAttribute('target', '_blank');
       } else {
         // Split elements between phone and normal text
