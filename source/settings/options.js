@@ -26,7 +26,7 @@ function restore_options() {
     username: '',
     password: '',
     http: 'http',
-    country: 'country',
+    country: 'BE',
     address: ''
   }, function (items) {
     document.getElementById('username').value = items.username;
