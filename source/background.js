@@ -25,8 +25,6 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
       if (info.menuItemId === 'selection-call') {
         number = parsePhoneNumber(info.selectionText, config?.country || 'BE').format('E.164');
-
-        confirm(number);
       } else if (info.menuItemId === 'link-call') {
         if (info.linkUrl.startsWith('tel:')) {
           number = info.linkUrl.substring(4);
