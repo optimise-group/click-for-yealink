@@ -1,7 +1,7 @@
 const { parsePhoneNumber, isValidNumber } = require('libphonenumber-js');
 
 chrome.runtime.onInstalled.addListener((_reason) => {
-  chrome.tabs.create({
+  browser.tabs.create({
     url: 'settings/options.html'
   });
 });
@@ -44,12 +44,12 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
       }
 
       if (isValid) {
-        chrome.tabs.create({
+        browser.tabs.create({
           url: `${config.http}://${config.username}:${encodeURIComponent(config.password)}@${config.address}/servlet?key=number=${encodeURIComponent(number)}`,
           active: false
         }, (tab) => {
           if (config.enableTimeout) {
-            setTimeout(() => chrome.tabs.remove(tab.id), 1000);
+            setTimeout(() => browser.tabs.remove(tab.id), 1000);
           }
         });
       }
