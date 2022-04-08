@@ -19,7 +19,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-  chrome.storage.sync.get(['username', 'password', 'http', 'country', 'address'], (config) => {
+  chrome.storage.sync.get(['username', 'password', 'enableTimeout', 'http', 'country', 'address'], (config) => {
     if (info.menuItemId === 'selection-call' || info.menuItemId === 'link-call') {
       let number = '';
 
@@ -48,7 +48,9 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
           url: `${config.http}://${config.username}:${encodeURIComponent(config.password)}@${config.address}/servlet?key=number=${encodeURIComponent(number)}`,
           active: false
         }, (tab) => {
-          setTimeout(() => chrome.tabs.remove(tab.id), 1000)
+          if (config.enableTimeout) {
+            setTimeout(() => browser.tabs.remove(tab.id), 1000);
+          }
         });
       }
     }

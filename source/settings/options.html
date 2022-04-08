@@ -59,8 +59,18 @@
               <option value="NL">Netherlands</option>
               <option value="US">United States of America</option>
             </select>
-						<span class="helper-text">When calling a number without a country code, Click will use this country code by default.</span>
+						<span class="form-text">When calling a number without a country code, Click will use this country code by default.</span>
           </div>
+
+          <div class="mb-3">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="1" id="enableTimeout">
+							<label class="form-check-label" for="enableTimeout">
+								Close call tabs automatically after 1 second.
+								<div class="form-text">When starting a call, your browser will open a new tab to tell your phone to start calling the number. You may need to give permission to your browser to login to your device for the first call. Make sure this option is disabled for your first call so you have time to give this permission.</div>
+							</label>
+						</div>
+					</div>
 
           <div class="mb-3">
             <label for="address" class="form-label">Device IP-address</label>
