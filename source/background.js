@@ -49,7 +49,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
           active: false
         }, (tab) => {
           if (config.enableTimeout) {
-            setTimeout(() => browser.tabs.remove(tab.id), 1000);
+            setTimeout(() => chrome.tabs.remove(tab.id), 1000);
           }
         });
       }
