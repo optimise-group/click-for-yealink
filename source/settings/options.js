@@ -2,12 +2,13 @@ function save_options() {
   var username = document.getElementById('username').value || '';
   var password = document.getElementById('password').value || '';
   var http = document.getElementById('http').value;
+  var country = document.getElementById('country').value;
   var address = document.getElementById('address').value || '';
 
-  let saveSet = { username, http, address };
+  let saveSet = { username, http, country, address };
 
   if (password) {
-    saveSet = { username, password, http, address };
+    saveSet = { username, password, http, country, address };
   }
 
   chrome.storage.sync.set(saveSet, function () {
@@ -25,10 +26,12 @@ function restore_options() {
     username: '',
     password: '',
     http: 'http',
+    country: 'country',
     address: ''
   }, function (items) {
     document.getElementById('username').value = items.username;
     document.getElementById('http').value = items.http;
+    document.getElementById('country').value = items.country;
     document.getElementById('address').value = items.address;
   });
 }

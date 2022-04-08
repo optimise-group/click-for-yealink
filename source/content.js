@@ -21,7 +21,7 @@ async function renderPhoneNumbers() {
     'xxx+xxxxxxxxxx',
     'x{9,14}',
   ];
-  
+
   // Create the search string by merging all patterns listed above and normalizing its content
   const str = formats.join('|')
     .replace(/[()+]/g, '\\$&')
@@ -45,10 +45,10 @@ async function renderPhoneNumbers() {
         // Split elements between phone and normal text
         const regex = RegExp('(' + str + ')', '');
         const nodeCompartments = node.nodeValue.split(regex);
-  
+
         while (nodeCompartments.length > 1) {
           const text = nodeCompartments.shift();
-  
+
           if (text.length) {
             // Insert new text node for normal text
             node.parentNode.insertBefore(document.createTextNode(text), node);
@@ -61,11 +61,11 @@ async function renderPhoneNumbers() {
           anchor.setAttribute('class', 'sippy-click-touched');
           anchor.setAttribute('target', '_blank');
           anchor.textContent = phoneNumber;
-            
+
           // Re-insert phonenumber
           node.parentNode.insertBefore(anchor, node);
         }
-        
+
         // reduce the original node to the ending non-phone part
         node.nodeValue = nodeCompartments[0];
       }

@@ -30,11 +30,11 @@
             <input type="password" class="form-control" id="password">
           </div>
         </section>
-    
+
         <section id="http-section" class="mt-3">
           <h2 class="h4">Protocol</h2>
           <p>Not all devices provide support for HTTPS. If you have an old device, you'll likely only have HTTP available.</p>
-    
+
           <div class="mb-3">
             <label for="http" class="form-label">Password</label>
             <select class="form-select" id="http">
@@ -43,17 +43,31 @@
             </select>
           </div>
         </section>
-    
-        <section id="address-section" class="mt-3">
-          <h2 class="h4">IP address</h2>
-          <p>The IP-address of your device.</p>
-    
+
+        <section id="settings-section" class="mt-3">
+          <h2 class="h4">Settings</h2>
+
           <div class="mb-3">
-            <label for="address" class="form-label">IP address</label>
+            <label for="country" class="form-label">Country code</label>
+            <select class="form-select" id="country">
+              <option value="BE">Belgium</option>
+              <option value="CH">Switserland</option>
+              <option value="DE">Germany</option>
+              <option value="FR">France</option>
+              <option value="GB">United Kingdrom</option>
+              <option value="LU">Luxembourg</option>
+              <option value="NL">Netherlands</option>
+              <option value="US">United States of America</option>
+            </select>
+						<span class="helper-text">When calling a number without a country code, Click will use this country code by default.</span>
+          </div>
+
+          <div class="mb-3">
+            <label for="address" class="form-label">Device IP-address</label>
             <input type="text" class="form-control" id="address">
           </div>
         </section>
-    
+
         <section id="save-section" class="mt-3">
           <div id="status"></div>
           <button id="save" class="btn btn-primary">Save</button>

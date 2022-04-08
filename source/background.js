@@ -18,37 +18,39 @@ chrome.contextMenus.create({
   'contexts': ['link']
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId === 'selection-call' || info.menuItemId === 'link-call') {
-    let number = '';
+chrome.contextMenus.onClicked.addListener(async (info, tab) => {
+  chrome.storage.sync.get(['username', 'password', 'http', 'country', 'address'], (config) => {
+    if (info.menuItemId === 'selection-call' || info.menuItemId === 'link-call') {
+      let number = '';
 
-    if (info.menuItemId === 'selection-call') {
-      number = parsePhoneNumber(info.selectionText, 'BE').format('E.164');
-    } else if (info.menuItemId === 'link-call') {
-      if (info.linkUrl.startsWith('tel:')) {
-        number = info.linkUrl.substring(4);
-      } else if (info.linkUrl.includes('servlet?key=number=')) {
-        number = decodeURIComponent(info.linkUrl.substring(info.linkUrl.indexOf('servlet?key=number=') + 'servlet?key=number='.length));
-      } else {
-        number = info.linkUrl;
+      if (info.menuItemId === 'selection-call') {
+        number = parsePhoneNumber(info.selectionText, config?.country || 'BE').format('E.164');
+
+        confirm(number);
+      } else if (info.menuItemId === 'link-call') {
+        if (info.linkUrl.startsWith('tel:')) {
+          number = info.linkUrl.substring(4);
+        } else if (info.linkUrl.includes('servlet?key=number=')) {
+          number = decodeURIComponent(info.linkUrl.substring(info.linkUrl.indexOf('servlet?key=number=') + 'servlet?key=number='.length));
+        } else {
+          number = info.linkUrl;
+        }
       }
-    }
 
-    let isValid = true;
+      let isValid = true;
 
-    if (!isValidNumber(number)) {
-      isValid = confirm(`The phone number (${number}) you selected isn't a valid number. Would you like to call it anyway?`);
-    }
+      if (!isValidNumber(number)) {
+        isValid = confirm(`The phone number (${number}) you selected isn't a valid number. Would you like to call it anyway?`);
+      }
 
-    if (isValid) {
-      chrome.storage.sync.get(['username', 'password', 'http', 'address'], (items) => {
+      if (isValid) {
         chrome.tabs.create({
-          url: `${items.http}://${items.username}:${encodeURIComponent(items.password)}@${items.address}/servlet?key=number=${encodeURIComponent(number)}`,
+          url: `${config.http}://${config.username}:${encodeURIComponent(config.password)}@${config.address}/servlet?key=number=${encodeURIComponent(number)}`,
           active: false
         }, (tab) => {
           setTimeout(() => chrome.tabs.remove(tab.id), 1000)
         });
-      });
+      }
     }
-  }
+  });
 });
