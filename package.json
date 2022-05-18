@@ -48,7 +48,7 @@
 		"extends": "stylelint-config-xo"
 	},
 	"dependencies": {
-		"libphonenumber-js": "1.9.50"
+		"libphonenumber-js": "1.10.2"
 	},
 	"devDependencies": {
 		"@parcel/config-webextension": "2.4.1",
