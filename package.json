@@ -54,7 +54,7 @@
 		"@parcel/config-webextension": "2.4.1",
 		"@parcel/transformer-image": "2.4.1",
 		"npm-run-all": "4.1.5",
-		"parcel": "2.4.1",
+		"parcel": "2.7.0",
 		"stylelint": "14.6.1",
 		"stylelint-config-xo": "0.21.0",
 		"xo": "0.48.0"
